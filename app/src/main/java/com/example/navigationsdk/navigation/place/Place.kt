@@ -1,4 +1,4 @@
-package com.example.navigationsdk.place
+package com.example.navigationsdk.navigation.place
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
