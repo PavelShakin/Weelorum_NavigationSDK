@@ -12,14 +12,14 @@ import com.example.navigationsdk.navigation.place.PlaceRenderer
 import com.example.navigationsdk.navigation.place.PlacesReader
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.Circle
-import com.google.android.gms.maps.model.CircleOptions
-import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.ClusterManager
 
-class NavigationFragment : Fragment() {
+class NavigationFragment : Fragment(R.layout.fragment_navigation), OnMapReadyCallback {
 
+    private var mapFragment: SupportMapFragment? = SupportMapFragment()
     private val places: List<Place> by lazy {
         PlacesReader(requireContext()).read()
     }
@@ -30,8 +30,28 @@ class NavigationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val mapFragment = parentFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
-        mapFragment?.getMapAsync{ googleMap ->
+        mapFragment = parentFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        configMap()
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        val sydney = LatLng(0.0, 0.0)
+        googleMap.addMarker(
+            MarkerOptions()
+                .position(sydney)
+                .title("Marker in Sydney")
+        )
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
+
+    private fun configMap() {
+        mapFragment?.getMapAsync { googleMap ->
             googleMap.setOnMapLoadedCallback {
                 val bounds = LatLngBounds.builder()
                 places.forEach { bounds.include(it.latLng) }
@@ -40,7 +60,6 @@ class NavigationFragment : Fragment() {
 
             addClusteredMarkers(googleMap)
         }
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     private fun addClusteredMarkers(googleMap: GoogleMap) {
