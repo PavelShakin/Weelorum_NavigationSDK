@@ -1,8 +1,8 @@
-package com.example.navigationsdk.navigation.place
+package com.example.navigationsdk.map.place
 
 import android.content.Context
 import androidx.core.content.ContextCompat
-import com.example.navigationsdk.navigation.BitmapHelper
+import com.example.navigationsdk.map.BitmapHelper
 import com.example.navigationsdk.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptor

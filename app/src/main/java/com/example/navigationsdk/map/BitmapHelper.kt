@@ -1,4 +1,4 @@
-package com.example.navigationsdk.navigation
+package com.example.navigationsdk.map
 
 import android.content.Context
 import android.graphics.Bitmap

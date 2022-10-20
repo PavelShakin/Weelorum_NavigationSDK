@@ -6,9 +6,12 @@
         <entry key="..\:/Users/pashk/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/activity_list_item.xml" value="0.25" />
         <entry key="..\:/Users/pashk/Downloads/NavigationSDK/app/src/main/res/layout/activity_main.xml" value="0.2359375" />
         <entry key="..\:/Users/pashk/Downloads/NavigationSDK/app/src/main/res/layout/marker_info_contents.xml" value="0.25" />
+        <entry key="..\:/Users/pashk/StudioProjects/NavigationSDK/app/src/main/res/drawable/ic_drive.xml" value="0.317" />
+        <entry key="..\:/Users/pashk/StudioProjects/NavigationSDK/app/src/main/res/drawable/ic_map.xml" value="0.317" />
         <entry key="..\:/Users/pashk/StudioProjects/NavigationSDK/app/src/main/res/layout/activity_main.xml" value="0.425" />
         <entry key="..\:/Users/pashk/StudioProjects/NavigationSDK/app/src/main/res/layout/fragment_drive.xml" value="0.425" />
         <entry key="..\:/Users/pashk/StudioProjects/NavigationSDK/app/src/main/res/layout/fragment_navigation.xml" value="0.425" />
+        <entry key="..\:/Users/pashk/StudioProjects/NavigationSDK/app/src/main/res/xml/provider_path.xml" value="0.425" />
       </map>
     </option>
   </component>

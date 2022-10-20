@@ -1,11 +1,18 @@
 package com.example.navigationsdk.drive
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.navigationsdk.R
+import com.example.navigationsdk.databinding.FragmentDriveBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -17,20 +24,33 @@ import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
 import kotlinx.coroutines.*
 
+class DriveFragment : Fragment(), CoroutineScope by MainScope() {
 
-class DriveFragment : Fragment(R.layout.fragment_drive), CoroutineScope by MainScope() {
+    private lateinit var binding: FragmentDriveBinding
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val intent = result.data
+                if (intent != null) {
+                    handleSignInResult(intent)
+                }
+            }
+        }
 
-    companion object {
-        private const val REQUEST_SIGN_IN = 1
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentDriveBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    lateinit var observer: MyLifecycleObserver
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        observer = MyLifecycleObserver(requireActivity().activityResultRegistry)
-        lifecycle.addObserver(observer)
+        setSwitchToMapFragmentOnClick()
+        requestSignIn()
     }
 
     override fun onDestroy() {
@@ -38,19 +58,15 @@ class DriveFragment : Fragment(R.layout.fragment_drive), CoroutineScope by MainS
         cancel()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        val selectButton = view.findViewById<Button>(R.id.select_button)
-//
-//        selectButton.setOnClickListener {
-//            // Open the activity to select an image
-//            observer.selectImage()
-//        }
+    private fun setSwitchToMapFragmentOnClick() {
+        binding.switchButton.setOnClickListener {
+            findNavController().navigate(R.id.action_driverFragment_to_mapFragment)
+        }
     }
 
     private fun buildGoogleSignInClient(): GoogleSignInClient {
         val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            // .requestScopes(Drive.SCOPE_FILE)
-            // .requestScopes(Scope(DriveScopes.DRIVE_FILE))
+            .requestScopes(Scope(DriveScopes.DRIVE_FILE))
             .requestScopes(Scope(DriveScopes.DRIVE))
             .build()
         return GoogleSignIn.getClient(requireActivity(), signInOptions)
@@ -95,6 +111,6 @@ class DriveFragment : Fragment(R.layout.fragment_drive), CoroutineScope by MainS
 
     private fun requestSignIn() {
         val client = buildGoogleSignInClient()
-        startActivityForResult(client.signInIntent, REQUEST_SIGN_IN)
+        startForResult.launch(client.signInIntent)
     }
 }

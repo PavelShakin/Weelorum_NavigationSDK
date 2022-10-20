@@ -23,12 +23,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
     }
 }
 
@@ -52,6 +58,4 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:2.2.0'
     implementation 'com.google.api-client:google-api-client-android:2.0.0'
     implementation 'com.google.apis:google-api-services-drive:v3-rev197-1.25.0'
-    implementation 'com.google.http-client:google-http-client:1.42.2'
-
 }

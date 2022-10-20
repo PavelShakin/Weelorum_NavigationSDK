@@ -1,4 +1,4 @@
-package com.example.navigationsdk.navigation.place
+package com.example.navigationsdk.map.place
 
 import com.google.android.gms.maps.model.LatLng
 

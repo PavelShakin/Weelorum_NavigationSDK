@@ -1,4 +1,4 @@
-package com.example.navigationsdk.navigation
+package com.example.navigationsdk.map
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.navigationsdk.R
-import com.example.navigationsdk.navigation.place.Place
-import com.example.navigationsdk.navigation.place.PlaceRenderer
-import com.example.navigationsdk.navigation.place.PlacesReader
+import com.example.navigationsdk.databinding.FragmentMapBinding
+import com.example.navigationsdk.map.place.Place
+import com.example.navigationsdk.map.place.PlaceRenderer
+import com.example.navigationsdk.map.place.PlacesReader
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -17,8 +19,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.ClusterManager
 
-class NavigationFragment : Fragment(R.layout.fragment_navigation), OnMapReadyCallback {
+class MapFragment : Fragment(), OnMapReadyCallback {
 
+    private lateinit var binding: FragmentMapBinding
     private var mapFragment: SupportMapFragment? = SupportMapFragment()
     private val places: List<Place> by lazy {
         PlacesReader(requireContext()).read()
@@ -29,14 +32,16 @@ class NavigationFragment : Fragment(R.layout.fragment_navigation), OnMapReadyCal
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        binding = FragmentMapBinding.inflate(inflater, container, false)
         mapFragment = parentFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setSwitchToDriveFragmentOnClick()
         configMap()
     }
 
@@ -48,6 +53,12 @@ class NavigationFragment : Fragment(R.layout.fragment_navigation), OnMapReadyCal
                 .title("Marker in Sydney")
         )
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(startPoint))
+    }
+
+    private fun setSwitchToDriveFragmentOnClick() {
+        binding.switchButton.setOnClickListener {
+            findNavController().navigate(R.id.action_mapFragment_to_driveFragment)
+        }
     }
 
     private fun configMap() {

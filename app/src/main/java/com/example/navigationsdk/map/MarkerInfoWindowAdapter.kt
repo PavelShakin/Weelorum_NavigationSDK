@@ -1,11 +1,11 @@
-package com.example.navigationsdk.navigation
+package com.example.navigationsdk.map
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.example.navigationsdk.R
-import com.example.navigationsdk.navigation.place.Place
+import com.example.navigationsdk.map.place.Place
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 

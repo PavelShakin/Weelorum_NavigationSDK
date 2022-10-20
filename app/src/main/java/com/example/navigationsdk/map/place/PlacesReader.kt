@@ -1,4 +1,4 @@
-package com.example.navigationsdk.navigation.place
+package com.example.navigationsdk.map.place
 
 import android.content.Context
 import com.example.navigationsdk.R
