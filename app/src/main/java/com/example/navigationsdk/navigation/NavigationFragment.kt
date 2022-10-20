@@ -41,13 +41,13 @@ class NavigationFragment : Fragment(R.layout.fragment_navigation), OnMapReadyCal
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val sydney = LatLng(0.0, 0.0)
+        val startPoint = LatLng(0.0, 0.0)
         googleMap.addMarker(
             MarkerOptions()
-                .position(sydney)
+                .position(startPoint)
                 .title("Marker in Sydney")
         )
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(startPoint))
     }
 
     private fun configMap() {
