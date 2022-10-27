@@ -11,16 +11,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:mapId="@string/map_id" />
-
-    <ImageButton
-        android:id="@+id/switchButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_drive"
-        android:background="#00000000"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

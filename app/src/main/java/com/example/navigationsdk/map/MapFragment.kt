@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.navigationsdk.R
 import com.example.navigationsdk.databinding.FragmentMapBinding
 import com.example.navigationsdk.map.place.Place
@@ -41,7 +40,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setSwitchToDriveFragmentOnClick()
         configMap()
     }
 
@@ -55,12 +53,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(startPoint))
     }
 
-    private fun setSwitchToDriveFragmentOnClick() {
-        binding.switchButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mapFragment_to_driveFragment)
-        }
-    }
-
     private fun configMap() {
         mapFragment?.getMapAsync { googleMap ->
             googleMap.setOnMapLoadedCallback {
@@ -71,6 +63,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             addClusteredMarkers(googleMap)
         }
+    }
+
+    private fun configNavigator() {
     }
 
     private fun addClusteredMarkers(googleMap: GoogleMap) {
